@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header" style="text-align: center; font-size: x-large">Ajout d'une operation</div>
+        <div class="card-body">
+            <form action="/controle/save_operation" method="post" style="padding: 10px 400px">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Envoyer" class="btn btn-dark">
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}

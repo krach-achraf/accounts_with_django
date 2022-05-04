@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header" style="text-align: center; font-size: x-large">Les détails d'un client</div>
+        <div class="card-body" style="padding: 30px 150px;">
+            <div class="row">
+                <div class="col-md-4">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Code :</li>
+                        <li class="list-group-item">Nom :</li>
+                        <li class="list-group-item">Prenom :</li>
+                    </ul>
+                </div>
+                <div class="col-md-8">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{ client.code }}</li>
+                        <li class="list-group-item">{{ client.nom }}</li>
+                        <li class="list-group-item">{{ client.prenom }}</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock content %}

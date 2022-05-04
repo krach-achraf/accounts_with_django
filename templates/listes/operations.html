@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header" style="text-align: center; font-size: x-large">Liste des operations d'un client</div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead  class="table-light">
+                <tr>
+                    <th>Numero</th>
+                    <th>Date</th>
+                    <th>Montant</th>
+                    <th>Type</th>
+                    <th>Compte</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for operation in operations %}
+                    <tr>
+                        <td>{{ operation.numOperation }}</td>
+                        <td>{{ operation.dateOperation }}</td>
+                        <td>{{ operation.montant }}</td>
+                        <td>{{ operation.typeOperation }}</td>
+                        <td>{{ operation.compte.num }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,65 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class=" col-md-3">
+                    <a href="/controle/add_client" class="btn btn-dark btn-block">Ajouter</a>
+                </div>
+                <div class="col-md-6"></div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input type="search" name="nom" class="form-control" placeholder="Rechercher"
+                               onkeyup="search()"/>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-body ">
+            <table class="table table-hover">
+                <thead class="table-light">
+                <tr>
+                    <th>Code</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="table">
+                {% for client in  page_obj %}
+                    <tr>
+                        <td>{{ client.code }}</td>
+                        <td>{{ client.nom }}</td>
+                        <td>{{ client.prenom }}</td>
+                        <td>
+                            <a href="/controle/details_client/{{ client.code }}" class="btn btn-secondary">Details</a>
+                            <a href="/controle/operations_client/{{ client.code }}" class="btn btn-light">Operations</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo;Premier</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">Précedent</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">Suivant</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">Dernier &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
