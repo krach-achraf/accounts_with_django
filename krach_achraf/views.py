@@ -4,6 +4,7 @@ from .models import Client, Compte, Operation
 from django.core import serializers
 from django.core.paginator import Paginator
 from .forms import ClientForm, CompteForm, OperationForm
+from .models import Compte
 
 
 def get_clients(request):
@@ -77,10 +78,25 @@ def save_operation(request):
     montant = request.POST.get('montant')
     typeOperation = request.POST.get('type')
     compte = request.POST.get('compte')
-    operation = Operation.objects.create(numOperation=numero,
-                                         dateOperation=dateOperation,
-                                         typeOperation=typeOperation,
-                                         montant=montant,
-                                         compte_id=compte)
-    operation.save()
+    c = Compte.objects.get(id=compte)
+    if typeOperation == "versement":
+        nvSolde = float(c.solde) + float(montant)
+        Compte.objects.filter(id=compte).update(solde=nvSolde)
+        operation = Operation.objects.create(numOperation=numero,
+                                             dateOperation=dateOperation,
+                                             typeOperation=typeOperation,
+                                             montant=montant,
+                                             compte_id=compte)
+        operation.save()
+    elif typeOperation == "retrait":
+        if float(c.solde) > float(montant):
+            nvSolde = float(c.solde) - float(montant)
+            Compte.objects.filter(id=compte).update(solde=nvSolde)
+            operation = Operation.objects.create(numOperation=numero,
+                                                 dateOperation=dateOperation,
+                                                 typeOperation=typeOperation,
+                                                 montant=montant,
+                                                 compte_id=compte)
+            operation.save()
+
     return redirect("/controle/add_operation")
